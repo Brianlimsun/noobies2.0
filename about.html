@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - TrackMyStuff</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #0B0B1D;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .accent-gradient {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(194, 181, 255, 0.1) 0%, rgba(10, 11, 20, 0) 70%);
+            z-index: -1;
+        }
+
+        .accent-top {
+            top: -400px;
+            right: -200px;
+        }
+
+        .accent-bottom {
+            bottom: -400px;
+            left: -200px;
+        }
+
+        header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 1400px;
+            padding: 16px 24px;
+            background: rgba(11, 11, 29, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border: 1px solid rgba(193, 194, 250, 0.1);
+            border-radius: 24px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #C1C2FA;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #C1C2FA;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 12px;
+            margin-left: 32px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn {
+            padding: 10px 24px;
+            border: 1px solid rgba(193, 194, 250, 0.3);
+            border-radius: 16px;
+            background: transparent;
+            color: #C1C2FA;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .login-btn:hover {
+            background: rgba(193, 194, 250, 0.1);
+            border-color: #C1C2FA;
+        }
+
+        .signup-btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 16px;
+            background: #C1C2FA;
+            color: #0B0B1D;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .signup-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .menu-button {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-button {
+                display: block;
+            }
+        }
+
+        .about-section {
+            padding: 120px 20px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 24px;
+            border: 1px solid rgba(193, 194, 250, 0.1);
+        }
+
+        .about-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .about-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #C1C2FA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .team-section {
+            padding: 60px 0;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .team-member {
+            background: rgba(193, 194, 250, 0.03);
+            border: 1px solid rgba(193, 194, 250, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            border-color: #C1C2FA;
+        }
+
+        .member-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            border: 3px solid #C1C2FA;
+        }
+
+        .member-name {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: #C1C2FA;
+        }
+
+        @media (max-width: 968px) {
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image {
+                height: 400px;
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-title {
+                font-size: 2rem;
+            }
+
+            .about-description {
+                font-size: 1rem;
+            }
+
+            .member-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="accent-gradient accent-top"></div>
+    <div class="accent-gradient accent-bottom"></div>
+    
+    <header>
+        <nav>
+            <a href="indexlogin.html" class="logo">TrackMyStuff</a>
+            <div class="nav-links">
+                <a href="indexlogin.html" class="nav-link">Features</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="#" class="nav-link">Contact</a>
+            </div>
+            <button class="menu-button">☰</button>
+        </nav>
+    </header>
+
+    <section class="about-section">
+        <div class="about-container">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c" alt="About Us" class="about-image">
+            <div class="about-text">
+                <h1 class="about-title">About TrackMyStuff</h1>
+                <p class="about-description">
+                    TrackMyStuff is a comprehensive platform designed to streamline campus management for educational institutions. Our system simplifies fee receipt management and revolutionizes the lost-and-found process through innovative technology and user-friendly interfaces.
+                </p>
+                <p class="about-description">
+                    Our mission is to eliminate the hassles of traditional paper-based systems and create a more efficient, secure, and accessible platform for all users. Through AI-powered features and intuitive design, we're making campus management smarter and more convenient.
+                </p>
+            </div>
+        </div>
+
+        <div class="team-section">
+            <h2 class="about-title">Meet Our Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="images/brian.jpg" alt="Brian Lim Sun" class="member-image">
+                    <h3 class="member-name">Brian Lim Sun</h3>
+                    <div class="social-links">
+                        <a href="https://github.com/brianlimaye" class="social-link" target="_blank">GitHub</a>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <img src="images/harchelle.jpeg" alt="Harchelle R Sangma" class="member-image">
+                    <h3 class="member-name">Harchelle R Sangma</h3>
+                    <div class="social-links">
+                        <a href="https://github.com/harchelle" class="social-link" target="_blank">GitHub</a>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <img src="images/gladia.jpg" alt="Gladia M SLong" class="member-image">
+                    <h3 class="member-name">Gladia M SLong</h3>
+                    <div class="social-links">
+                        <a href="https://github.com/gladia" class="social-link" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html> 

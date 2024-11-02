@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication - TrackMyStuff</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #0B0B1D;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 1400px;
+            padding: 16px 24px;
+            background: rgba(11, 11, 29, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border: 1px solid rgba(193, 194, 250, 0.1);
+            border-radius: 24px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #C1C2FA;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 20px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #C1C2FA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(11, 11, 29, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(193, 194, 250, 0.1);
+            border-radius: 24px;
+            padding: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(193, 194, 250, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #C1C2FA;
+            background-color: rgba(193, 194, 250, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px 24px;
+            border-radius: 12px;
+            background: #C1C2FA;
+            color: #0B0B1D;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: #C1C2FA;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        select.form-input {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+
+        select.form-input option {
+            background: #0B0B1D;
+            color: white;
+            padding: 12px;
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 24px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-footer a {
+            color: #C1C2FA;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="indexlogin.html" class="logo">TrackMyStuff</a>
+            <div class="nav-links">
+                <a href="#" class="nav-link">Features</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="#" class="nav-link">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="auth-container">
+            <h1 class="page-title">Account Access</h1>
+            
+            <!-- Login Form -->
+            <div id="loginForm" class="form-container active">
+                <form>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" placeholder="Enter your password" required>
+                    </div>
+                    <div class="forgot-password">
+                        <a href="#">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="submit-btn">Log In</button>
+                </form>
+                <div class="form-footer">
+                    Don't have an account? <a href="#" onclick="switchForm('signup')">Sign Up</a>
+                </div>
+            </div>
+
+            <!-- Signup Form -->
+            <div id="signupForm" class="form-container">
+                <form>
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">College/University</label>
+                        <select class="form-input" required>
+                            <option value="" disabled selected>Select your institution</option>
+                            <optgroup label="Indian Institutes of Technology (IITs)">
+                                <option value="iit-bhilai">IIT Bhilai</option>
+                                <option value="iit-bhubaneswar">IIT Bhubaneswar</option>
+                                <option value="iit-bombay">IIT Bombay</option>
+                                <option value="iit-delhi">IIT Delhi</option>
+                                <option value="iit-dharwad">IIT Dharwad</option>
+                                <option value="iit-gandhinagar">IIT Gandhinagar</option>
+                                <option value="iit-goa">IIT Goa</option>
+                                <option value="iit-guwahati">IIT Guwahati</option>
+                                <option value="iit-hyderabad">IIT Hyderabad</option>
+                                <option value="iit-indore">IIT Indore</option>
+                                <option value="iit-jammu">IIT Jammu</option>
+                                <option value="iit-jodhpur">IIT Jodhpur</option>
+                                <option value="iit-kanpur">IIT Kanpur</option>
+                                <option value="iit-kharagpur">IIT Kharagpur</option>
+                                <option value="iit-madras">IIT Madras</option>
+                                <option value="iit-mandi">IIT Mandi</option>
+                                <option value="iit-palakkad">IIT Palakkad</option>
+                                <option value="iit-patna">IIT Patna</option>
+                                <option value="iit-roorkee">IIT Roorkee</option>
+                                <option value="iit-ropar">IIT Ropar</option>
+                                <option value="iit-tirupati">IIT Tirupati</option>
+                                <option value="iit-varanasi">IIT Varanasi (BHU)</option>
+                            </optgroup>
+                            <optgroup label="National Institutes of Technology (NITs)">
+                                <option value="nit-agartala">NIT Agartala</option>
+                                <option value="nit-allahabad">NIT Allahabad</option>
+                                <option value="nit-andhra">NIT Andhra Pradesh</option>
+                                <option value="nit-arunachal">NIT Arunachal Pradesh</option>
+                                <option value="nit-calicut">NIT Calicut</option>
+                                <option value="nit-delhi">NIT Delhi</option>
+                                <option value="nit-durgapur">NIT Durgapur</option>
+                                <option value="nit-goa">NIT Goa</option>
+                                <option value="nit-hamirpur">NIT Hamirpur</option>
+                                <option value="nit-jaipur">NIT Jaipur</option>
+                                <option value="nit-jalandhar">NIT Jalandhar</option>
+                                <option value="nit-jamshedpur">NIT Jamshedpur</option>
+                                <option value="nit-karnataka">NIT Karnataka, Surathkal</option>
+                                <option value="nit-kurukshetra">NIT Kurukshetra</option>
+                                <option value="nit-manipur">NIT Manipur</option>
+                                <option value="nit-meghalaya">NIT Meghalaya</option>
+                                <option value="nit-mizoram">NIT Mizoram</option>
+                                <option value="nit-nagaland">NIT Nagaland</option>
+                                <option value="nit-nagpur">NIT Nagpur</option>
+                                <option value="nit-patna">NIT Patna</option>
+                                <option value="nit-puducherry">NIT Puducherry</option>
+                                <option value="nit-raipur">NIT Raipur</option>
+                                <option value="nit-rourkela">NIT Rourkela</option>
+                                <option value="nit-sikkim">NIT Sikkim</option>
+                                <option value="nit-silchar">NIT Silchar</option>
+                                <option value="nit-srinagar">NIT Srinagar</option>
+                                <option value="nit-tiruchirappalli">NIT Tiruchirappalli</option>
+                                <option value="nit-uttarakhand">NIT Uttarakhand</option>
+                                <option value="nit-warangal">NIT Warangal</option>
+                            </optgroup>
+                            <optgroup label="Other">
+                                <option value="other">Other Institution</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-group" id="otherInstitute" style="display: none;">
+                        <label class="form-label">Institution Name</label>
+                        <input type="text" class="form-input" placeholder="Enter your institution name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" placeholder="Create a password" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" class="form-input" placeholder="Confirm your password" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Sign Up</button>
+                </form>
+                <div class="form-footer">
+                    Already have an account? <a href="#" onclick="switchForm('login')">Log In</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function switchForm(formType) {
+            document.querySelectorAll('.form-container').forEach(form => {
+                form.classList.remove('active');
+            });
+            document.getElementById(formType + 'Form').classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.querySelector('#loginForm form');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                window.location.href = 'indexlogin.html';
+            });
+        });
+    </script>
+</body>
+</html> 
